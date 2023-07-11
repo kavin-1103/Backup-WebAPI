@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Azure;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -31,6 +32,7 @@ namespace Restaurant_Reservation_Management_System_Api.Controllers.AdminControll
 
         // GET: api/FoodItemsControllerAdmin
         [HttpGet]
+        [Authorize(Roles = "Customer")]
         public async Task<ActionResult<ServiceResponse<IEnumerable<GetFoodItemDtoAdmin>>>> GetFoodItems()
         {
             var response = await _foodItemServicesAdmin.GetFoodItems();
@@ -91,6 +93,7 @@ namespace Restaurant_Reservation_Management_System_Api.Controllers.AdminControll
 
         // DELETE: api/FoodItemsControllerAdmin/5
         [HttpDelete("{id}")]
+        
         public async Task<ActionResult<ServiceResponse<string>>> DeleteFoodItem(int id)
         {
             var response = await _foodItemServicesAdmin.DeleteFoodItem(id);

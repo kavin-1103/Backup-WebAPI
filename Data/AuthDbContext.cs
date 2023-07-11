@@ -1,12 +1,13 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using Restaurant_Reservation_Management_System_Api.Model;
 
 namespace Restaurant_Reservation_Management_System_Api.Data
 {
-    public class AuthDbContext : IdentityDbContext
+    public class AuthDbContext : IdentityDbContext<ApplicationUser>
     {
-        public AuthDbContext(DbContextOptions options) : base(options)
+        public AuthDbContext(DbContextOptions<AuthDbContext> options) : base(options)
         {
 
 
@@ -22,11 +23,7 @@ namespace Restaurant_Reservation_Management_System_Api.Data
 
             var customerRoleId = "e23dfba1-7e92-4cc7-92c8-d0bdf10e8a6d";
 
-
-
-
             //create new Admin and Customer Role
-
             var roles = new List<IdentityRole>
             {
                 new IdentityRole()
@@ -41,7 +38,7 @@ namespace Restaurant_Reservation_Management_System_Api.Data
                 {
                     Id = customerRoleId ,
                     Name = "Customer",
-                    NormalizedName = "Customet".ToUpper(),
+                    NormalizedName = "Customer".ToUpper(),
                     ConcurrencyStamp= customerRoleId ,
                 }
             };
@@ -55,20 +52,24 @@ namespace Restaurant_Reservation_Management_System_Api.Data
 
             var adminUserId = "4742a2e0-04d2-46ca-925a-bb0439e378b6";
 
-            var admin = new IdentityUser()
+            var admin = new ApplicationUser()
             {
-                Id = adminRoleId,
+                Id = adminUserId,
                 UserName = "vignesh",
                 Email = "vignesh123@gmail.com",
                 NormalizedEmail = "vignesh123@gmail.com".ToUpper(),
                 NormalizedUserName = "vignesh".ToUpper(),
+                Name = "vignesh",
+                
+
+               
 
             };
 
-            admin.PasswordHash = new PasswordHasher<IdentityUser>().HashPassword(admin, "Admin@123");
+            admin.PasswordHash = new PasswordHasher<ApplicationUser>().HashPassword(admin, "Admin@123");
 
 
-            builder.Entity<IdentityUser>().HasData(admin);
+            builder.Entity<ApplicationUser>().HasData(admin);
 
 
             //Give Roles To Admin

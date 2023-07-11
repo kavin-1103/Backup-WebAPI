@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "ooBn4UckDqPoAG/zysV8gzxMfdVA0KpJpUHcaL/yFmdDa4bZnjnxTSqBjPTJkC2Cjvb3BWRf3E2yA9Eipu7HTA==",
+  "dgSpecHash": "6itN82D2bqwwXdkju/dnhvKR7oabkLnmbj3F/Kf0lmz99DEienSflcUfvZK8mlblq9w4y8qngFiKNlaEm7Hvgg==",
   "success": true,
   "projectFilePath": "C:\\Users\\Vigne\\source\\repos\\Restaurant_Reservation_Management_System_Api\\Restaurant_Reservation_Management_System_Api.csproj",
   "expectedPackageFiles": [
@@ -58,6 +58,7 @@
     "C:\\Users\\Vigne\\.nuget\\packages\\humanizer.core.zh-cn\\2.14.1\\humanizer.core.zh-cn.2.14.1.nupkg.sha512",
     "C:\\Users\\Vigne\\.nuget\\packages\\humanizer.core.zh-hans\\2.14.1\\humanizer.core.zh-hans.2.14.1.nupkg.sha512",
     "C:\\Users\\Vigne\\.nuget\\packages\\humanizer.core.zh-hant\\2.14.1\\humanizer.core.zh-hant.2.14.1.nupkg.sha512",
+    "C:\\Users\\Vigne\\.nuget\\packages\\microsoft.aspnetcore.authentication.jwtbearer\\7.0.8\\microsoft.aspnetcore.authentication.jwtbearer.7.0.8.nupkg.sha512",
     "C:\\Users\\Vigne\\.nuget\\packages\\microsoft.aspnetcore.cryptography.internal\\7.0.8\\microsoft.aspnetcore.cryptography.internal.7.0.8.nupkg.sha512",
     "C:\\Users\\Vigne\\.nuget\\packages\\microsoft.aspnetcore.cryptography.keyderivation\\7.0.8\\microsoft.aspnetcore.cryptography.keyderivation.7.0.8.nupkg.sha512",
     "C:\\Users\\Vigne\\.nuget\\packages\\microsoft.aspnetcore.identity.entityframeworkcore\\7.0.8\\microsoft.aspnetcore.identity.entityframeworkcore.7.0.8.nupkg.sha512",

@@ -31,10 +31,8 @@ namespace Restaurant_Reservation_Management_System_Api.Data
 
         public DbSet<CartStore> CartStores { get; set; }    
 
-
         public DbSet<BookOrder> BookOrder { get; set; } 
              
-
         public DbSet<SelectedCartItems> SelectedCartItems { get; set; }
 
         public DbSet<OrderCartItem> OrderCartItems { get; set; }
