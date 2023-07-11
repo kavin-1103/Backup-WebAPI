@@ -23,8 +23,8 @@ namespace Restaurant_Reservation_Management_System_Api.Services.Admin.MenuCatego
         {
             var serviceResponse = new ServiceResponse<IEnumerable<GetMenuCategoryDtoAdmin>>();
 
-            try
-            {
+            
+            
                 var getAllMenuCategory = await _context.MenuCategories.ToListAsync();
 
                 if (getAllMenuCategory == null)
@@ -38,12 +38,7 @@ namespace Restaurant_Reservation_Management_System_Api.Services.Admin.MenuCatego
                 serviceResponse.Message = "All Menu Categories are Fetched";
                 serviceResponse.Success = true;
 
-            }
-            catch(Exception ex)
-            {
-                serviceResponse.Success = false;
-                serviceResponse.Message = ex.Message;
-            }
+           
             return serviceResponse;
         }
 

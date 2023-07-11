@@ -36,6 +36,43 @@ builder.Services.Configure<IdentityOptions>(options =>
     options.Password.RequiredUniqueChars = 1;
 });
 
+
+
+builder.Services.AddSwaggerGen(c =>
+{
+    c.AddSecurityDefinition("oauth2", new OpenApiSecurityScheme
+    {
+        Description = "Standard Authorization Header using Bearer Scheme , e.g , \"bearer {token}\"",
+        In = ParameterLocation.Header,
+        Name = "Authorization",
+        Type = SecuritySchemeType.ApiKey
+
+    });
+    c.OperationFilter<SecurityRequirementsOperationFilter>();
+});
+
+
+// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
+
+
+builder.Services.AddAutoMapper(typeof(Program).Assembly);
+builder.Services.AddScoped<ITableServicesAdmin, TableServicesAdmin>();
+builder.Services.AddScoped<IMenuCategoryServicesAdmin, MenuCategoryServicesAdmin>();
+
+builder.Services.AddScoped<IFoodItemServicesAdmin , FoodItemServicesAdmin>();   
+builder.Services.AddScoped<IReservationServicesUser, ReservationServicesUser>();
+builder.Services.AddScoped<ICustomerServicesUser , CustomerServicesUser>();
+builder.Services.AddScoped<IOrderServicesUser, OrderServicesUser>();
+builder.Services.AddScoped<IAuthService ,  AuthService>();
+builder.Services.AddScoped<ITokenRepository, TokenRepository>();
+
+
+builder.Services.AddControllers();
+builder.Services.AddCors();
+
+
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
         .AddJwtBearer(options =>
         {
@@ -54,38 +91,7 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
         });
 
 
-builder.Services.AddSwaggerGen(c =>
-{
-    c.AddSecurityDefinition("oauth2", new OpenApiSecurityScheme
-    {
-        Description = "Standard Authorization Header using Bearer Scheme , e.g , \"bearer {token}\"",
-        In = ParameterLocation.Header,
-        Name = "Authorization",
-        Type = SecuritySchemeType.ApiKey
 
-    });
-    c.OperationFilter<SecurityRequirementsOperationFilter>();
-});
-builder.Services.AddCors();
- builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
-
-
-builder.Services.AddAutoMapper(typeof(Program).Assembly);
-builder.Services.AddScoped<ITableServicesAdmin, TableServicesAdmin>();
-builder.Services.AddScoped<IMenuCategoryServicesAdmin, MenuCategoryServicesAdmin>();
-
-builder.Services.AddScoped<IFoodItemServicesAdmin , FoodItemServicesAdmin>();   
-builder.Services.AddScoped<IReservationServicesUser, ReservationServicesUser>();
-builder.Services.AddScoped<ICustomerServicesUser , CustomerServicesUser>();
-builder.Services.AddScoped<IOrderServicesUser, OrderServicesUser>();
-builder.Services.AddScoped<IAuthService ,  AuthService>();
-builder.Services.AddScoped<ITokenRepository, TokenRepository>();
-
-
- 
 
 
 var app = builder.Build();

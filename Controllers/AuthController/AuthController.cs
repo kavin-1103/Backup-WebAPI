@@ -70,7 +70,7 @@ namespace Restaurant_Reservation_Management_System_Api.Controllers.AuthControlle
                 {
                     var roles = await _userManager.GetRolesAsync(identityUser);
 
-                    //Create a Toeken and Response
+                    //Create a Token and Response
 
                     var jwtToken = _tokenRepository.CreateJwtToken(identityUser, roles.ToList());
                     var response = new LoginResponseDto()

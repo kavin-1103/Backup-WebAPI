@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -12,6 +13,7 @@ using Restaurant_Reservation_Management_System_Api.Services.Admin.MenuCategorySe
 
 namespace Restaurant_Reservation_Management_System_Api.Controllers.AdminController
 {
+    [Authorize]
     [Route("api/admin/[controller]")]
     [ApiController]
     public class MenuCategoriesControllerAdmin : ControllerBase
@@ -28,6 +30,7 @@ namespace Restaurant_Reservation_Management_System_Api.Controllers.AdminControll
 
         // GET: api/MenuCategoriesControllerAdmin
         [HttpGet]
+        [Authorize(Roles = "Customer")]
         public async Task<ActionResult<IEnumerable<GetMenuCategoryDtoAdmin>>> GetMenuCategories()
         {
             var response = await _menuCategoryServices.GetMenuCategory();
