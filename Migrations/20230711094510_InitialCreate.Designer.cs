@@ -12,8 +12,8 @@ using Restaurant_Reservation_Management_System_Api.Data;
 namespace Restaurant_Reservation_Management_System_Api.Migrations
 {
     [DbContext(typeof(RestaurantDbContext))]
-    [Migration("20230706162955_addedAddToCart")]
-    partial class addedAddToCart
+    [Migration("20230711094510_InitialCreate")]
+    partial class InitialCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -25,17 +25,165 @@ namespace Restaurant_Reservation_Management_System_Api.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("Restaurant_Reservation_Management_System_Api.Model.AddToCart", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
                 {
-                    b.Property<int>("AddToCartId")
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("ConcurrencyStamp")
+                        .IsConcurrencyToken()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<string>("NormalizedName")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("NormalizedName")
+                        .IsUnique()
+                        .HasDatabaseName("RoleNameIndex")
+                        .HasFilter("[NormalizedName] IS NOT NULL");
+
+                    b.ToTable("AspNetRoles", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "ef50d628-0f80-41e0-bd63-05d384b89b65",
+                            ConcurrencyStamp = "ef50d628-0f80-41e0-bd63-05d384b89b65",
+                            Name = "Admin",
+                            NormalizedName = "ADMIN"
+                        },
+                        new
+                        {
+                            Id = "e23dfba1-7e92-4cc7-92c8-d0bdf10e8a6d",
+                            ConcurrencyStamp = "e23dfba1-7e92-4cc7-92c8-d0bdf10e8a6d",
+                            Name = "Customer",
+                            NormalizedName = "CUSTOMER"
+                        });
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
+                {
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("AddToCartId"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.HasKey("AddToCartId");
+                    b.Property<string>("ClaimType")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.ToTable("AddToCart");
+                    b.Property<string>("ClaimValue")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("RoleId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("RoleId");
+
+                    b.ToTable("AspNetRoleClaims", (string)null);
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("ClaimType")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ClaimValue")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("AspNetUserClaims", (string)null);
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
+                {
+                    b.Property<string>("LoginProvider")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("ProviderKey")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("ProviderDisplayName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("LoginProvider", "ProviderKey");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("AspNetUserLogins", (string)null);
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<string>", b =>
+                {
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("RoleId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("UserId", "RoleId");
+
+                    b.HasIndex("RoleId");
+
+                    b.ToTable("AspNetUserRoles", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            UserId = "4742a2e0-04d2-46ca-925a-bb0439e378b6",
+                            RoleId = "ef50d628-0f80-41e0-bd63-05d384b89b65"
+                        },
+                        new
+                        {
+                            UserId = "4742a2e0-04d2-46ca-925a-bb0439e378b6",
+                            RoleId = "e23dfba1-7e92-4cc7-92c8-d0bdf10e8a6d"
+                        });
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
+                {
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("LoginProvider")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Value")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("UserId", "LoginProvider", "Name");
+
+                    b.ToTable("AspNetUserTokens", (string)null);
                 });
 
             modelBuilder.Entity("Restaurant_Reservation_Management_System_Api.Model.Admin", b =>
@@ -67,20 +215,92 @@ namespace Restaurant_Reservation_Management_System_Api.Migrations
                     b.ToTable("Admins");
                 });
 
-            modelBuilder.Entity("Restaurant_Reservation_Management_System_Api.Model.BookOrder", b =>
+            modelBuilder.Entity("Restaurant_Reservation_Management_System_Api.Model.ApplicationUser", b =>
                 {
-                    b.Property<int>("BookOrderId")
-                        .ValueGeneratedOnAdd()
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("AccessFailedCount")
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("BookOrderId"));
+                    b.Property<string>("ConcurrencyStamp")
+                        .IsConcurrencyToken()
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("Quantity")
-                        .HasColumnType("int");
+                    b.Property<string>("Email")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
 
-                    b.HasKey("BookOrderId");
+                    b.Property<bool>("EmailConfirmed")
+                        .HasColumnType("bit");
 
-                    b.ToTable("BookOrder");
+                    b.Property<bool>("LockoutEnabled")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTimeOffset?>("LockoutEnd")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("NormalizedEmail")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<string>("NormalizedUserName")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<string>("PasswordHash")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PhoneNumber")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("PhoneNumberConfirmed")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("SecurityStamp")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("TwoFactorEnabled")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("UserName")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("NormalizedEmail")
+                        .HasDatabaseName("EmailIndex");
+
+                    b.HasIndex("NormalizedUserName")
+                        .IsUnique()
+                        .HasDatabaseName("UserNameIndex")
+                        .HasFilter("[NormalizedUserName] IS NOT NULL");
+
+                    b.ToTable("AspNetUsers", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "4742a2e0-04d2-46ca-925a-bb0439e378b6",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "ec921f90-5554-4240-a560-54a6f7c8ba63",
+                            Email = "vignesh123@gmail.com",
+                            EmailConfirmed = false,
+                            LockoutEnabled = false,
+                            Name = "vignesh",
+                            NormalizedEmail = "VIGNESH123@GMAIL.COM",
+                            NormalizedUserName = "VIGNESH",
+                            PasswordHash = "AQAAAAIAAYagAAAAENyin4bfCbK4GTPEUcACRBIouWaoCmdPu8aojbpRvOde5dvqG8EYGF6sS5C8SGW9Jw==",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "0efe9468-3f7f-4360-8af1-9900ff09de90",
+                            TwoFactorEnabled = false,
+                            UserName = "vignesh"
+                        });
                 });
 
             modelBuilder.Entity("Restaurant_Reservation_Management_System_Api.Model.Customer", b =>
@@ -124,9 +344,6 @@ namespace Restaurant_Reservation_Management_System_Api.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("FoodItemId"));
 
-                    b.Property<int?>("AddToCartId")
-                        .HasColumnType("int");
-
                     b.Property<int>("CategoryId")
                         .HasColumnType("int");
 
@@ -142,8 +359,6 @@ namespace Restaurant_Reservation_Management_System_Api.Migrations
                         .HasColumnType("decimal(18,2)");
 
                     b.HasKey("FoodItemId");
-
-                    b.HasIndex("AddToCartId");
 
                     b.HasIndex("CategoryId");
 
@@ -178,6 +393,9 @@ namespace Restaurant_Reservation_Management_System_Api.Migrations
                     b.Property<int?>("AdminId")
                         .HasColumnType("int");
 
+                    b.Property<string>("ApplicationUserId")
+                        .HasColumnType("nvarchar(450)");
+
                     b.Property<int>("CustomerId")
                         .HasColumnType("int");
 
@@ -190,6 +408,8 @@ namespace Restaurant_Reservation_Management_System_Api.Migrations
                     b.HasKey("OrderId");
 
                     b.HasIndex("AdminId");
+
+                    b.HasIndex("ApplicationUserId");
 
                     b.HasIndex("CustomerId");
 
@@ -235,6 +455,9 @@ namespace Restaurant_Reservation_Management_System_Api.Migrations
                     b.Property<int?>("AdminId")
                         .HasColumnType("int");
 
+                    b.Property<string>("ApplicationUserId")
+                        .HasColumnType("nvarchar(450)");
+
                     b.Property<int>("CustomerId")
                         .HasColumnType("int");
 
@@ -256,6 +479,8 @@ namespace Restaurant_Reservation_Management_System_Api.Migrations
                     b.HasKey("ReservationId");
 
                     b.HasIndex("AdminId");
+
+                    b.HasIndex("ApplicationUserId");
 
                     b.HasIndex("CustomerId");
 
@@ -286,12 +511,59 @@ namespace Restaurant_Reservation_Management_System_Api.Migrations
                     b.ToTable("Tables");
                 });
 
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
+                {
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
+                        .WithMany()
+                        .HasForeignKey("RoleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
+                {
+                    b.HasOne("Restaurant_Reservation_Management_System_Api.Model.ApplicationUser", null)
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
+                {
+                    b.HasOne("Restaurant_Reservation_Management_System_Api.Model.ApplicationUser", null)
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<string>", b =>
+                {
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
+                        .WithMany()
+                        .HasForeignKey("RoleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Restaurant_Reservation_Management_System_Api.Model.ApplicationUser", null)
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
+                {
+                    b.HasOne("Restaurant_Reservation_Management_System_Api.Model.ApplicationUser", null)
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("Restaurant_Reservation_Management_System_Api.Model.FoodItem", b =>
                 {
-                    b.HasOne("Restaurant_Reservation_Management_System_Api.Model.AddToCart", null)
-                        .WithMany("FoodItems")
-                        .HasForeignKey("AddToCartId");
-
                     b.HasOne("Restaurant_Reservation_Management_System_Api.Model.MenuCategory", "Category")
                         .WithMany("FoodItems")
                         .HasForeignKey("CategoryId")
@@ -306,6 +578,10 @@ namespace Restaurant_Reservation_Management_System_Api.Migrations
                     b.HasOne("Restaurant_Reservation_Management_System_Api.Model.Admin", null)
                         .WithMany("Orders")
                         .HasForeignKey("AdminId");
+
+                    b.HasOne("Restaurant_Reservation_Management_System_Api.Model.ApplicationUser", null)
+                        .WithMany("Orders")
+                        .HasForeignKey("ApplicationUserId");
 
                     b.HasOne("Restaurant_Reservation_Management_System_Api.Model.Customer", "Customer")
                         .WithMany("Orders")
@@ -349,6 +625,10 @@ namespace Restaurant_Reservation_Management_System_Api.Migrations
                         .WithMany("Reservations")
                         .HasForeignKey("AdminId");
 
+                    b.HasOne("Restaurant_Reservation_Management_System_Api.Model.ApplicationUser", null)
+                        .WithMany("Reservations")
+                        .HasForeignKey("ApplicationUserId");
+
                     b.HasOne("Restaurant_Reservation_Management_System_Api.Model.Customer", "Customer")
                         .WithMany("Reservations")
                         .HasForeignKey("CustomerId")
@@ -366,12 +646,14 @@ namespace Restaurant_Reservation_Management_System_Api.Migrations
                     b.Navigation("Table");
                 });
 
-            modelBuilder.Entity("Restaurant_Reservation_Management_System_Api.Model.AddToCart", b =>
+            modelBuilder.Entity("Restaurant_Reservation_Management_System_Api.Model.Admin", b =>
                 {
-                    b.Navigation("FoodItems");
+                    b.Navigation("Orders");
+
+                    b.Navigation("Reservations");
                 });
 
-            modelBuilder.Entity("Restaurant_Reservation_Management_System_Api.Model.Admin", b =>
+            modelBuilder.Entity("Restaurant_Reservation_Management_System_Api.Model.ApplicationUser", b =>
                 {
                     b.Navigation("Orders");
 

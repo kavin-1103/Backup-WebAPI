@@ -5,14 +5,30 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #pragma warning disable CA1814 // Prefer jagged arrays over multidimensional
 
-namespace Restaurant_Reservation_Management_System_Api.Migrations.AuthDb
+namespace Restaurant_Reservation_Management_System_Api.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialMigrationForAuth : Migration
+    public partial class InitialCreate : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.CreateTable(
+                name: "Admins",
+                columns: table => new
+                {
+                    AdminId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    PasswordHash = table.Column<byte[]>(type: "varbinary(max)", nullable: false),
+                    PasswordSalt = table.Column<byte[]>(type: "varbinary(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Admins", x => x.AdminId);
+                });
+
             migrationBuilder.CreateTable(
                 name: "AspNetRoles",
                 columns: table => new
@@ -54,7 +70,7 @@ namespace Restaurant_Reservation_Management_System_Api.Migrations.AuthDb
                 });
 
             migrationBuilder.CreateTable(
-                name: "Customer",
+                name: "Customers",
                 columns: table => new
                 {
                     CustomerId = table.Column<int>(type: "int", nullable: false)
@@ -67,11 +83,11 @@ namespace Restaurant_Reservation_Management_System_Api.Migrations.AuthDb
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Customer", x => x.CustomerId);
+                    table.PrimaryKey("PK_Customers", x => x.CustomerId);
                 });
 
             migrationBuilder.CreateTable(
-                name: "MenuCategory",
+                name: "MenuCategories",
                 columns: table => new
                 {
                     MenuCategoryId = table.Column<int>(type: "int", nullable: false)
@@ -80,11 +96,11 @@ namespace Restaurant_Reservation_Management_System_Api.Migrations.AuthDb
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_MenuCategory", x => x.MenuCategoryId);
+                    table.PrimaryKey("PK_MenuCategories", x => x.MenuCategoryId);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Table",
+                name: "Tables",
                 columns: table => new
                 {
                     TableId = table.Column<int>(type: "int", nullable: false)
@@ -95,7 +111,7 @@ namespace Restaurant_Reservation_Management_System_Api.Migrations.AuthDb
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Table", x => x.TableId);
+                    table.PrimaryKey("PK_Tables", x => x.TableId);
                 });
 
             migrationBuilder.CreateTable(
@@ -205,7 +221,7 @@ namespace Restaurant_Reservation_Management_System_Api.Migrations.AuthDb
                 });
 
             migrationBuilder.CreateTable(
-                name: "FoodItem",
+                name: "FoodItems",
                 columns: table => new
                 {
                     FoodItemId = table.Column<int>(type: "int", nullable: false)
@@ -217,17 +233,17 @@ namespace Restaurant_Reservation_Management_System_Api.Migrations.AuthDb
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_FoodItem", x => x.FoodItemId);
+                    table.PrimaryKey("PK_FoodItems", x => x.FoodItemId);
                     table.ForeignKey(
-                        name: "FK_FoodItem_MenuCategory_CategoryId",
+                        name: "FK_FoodItems_MenuCategories_CategoryId",
                         column: x => x.CategoryId,
-                        principalTable: "MenuCategory",
+                        principalTable: "MenuCategories",
                         principalColumn: "MenuCategoryId",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Order",
+                name: "Orders",
                 columns: table => new
                 {
                     OrderId = table.Column<int>(type: "int", nullable: false)
@@ -235,32 +251,38 @@ namespace Restaurant_Reservation_Management_System_Api.Migrations.AuthDb
                     CustomerId = table.Column<int>(type: "int", nullable: false),
                     TableId = table.Column<int>(type: "int", nullable: false),
                     OrderDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    AdminId = table.Column<int>(type: "int", nullable: true),
                     ApplicationUserId = table.Column<string>(type: "nvarchar(450)", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Order", x => x.OrderId);
+                    table.PrimaryKey("PK_Orders", x => x.OrderId);
                     table.ForeignKey(
-                        name: "FK_Order_AspNetUsers_ApplicationUserId",
+                        name: "FK_Orders_Admins_AdminId",
+                        column: x => x.AdminId,
+                        principalTable: "Admins",
+                        principalColumn: "AdminId");
+                    table.ForeignKey(
+                        name: "FK_Orders_AspNetUsers_ApplicationUserId",
                         column: x => x.ApplicationUserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id");
                     table.ForeignKey(
-                        name: "FK_Order_Customer_CustomerId",
+                        name: "FK_Orders_Customers_CustomerId",
                         column: x => x.CustomerId,
-                        principalTable: "Customer",
+                        principalTable: "Customers",
                         principalColumn: "CustomerId",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Order_Table_TableId",
+                        name: "FK_Orders_Tables_TableId",
                         column: x => x.TableId,
-                        principalTable: "Table",
+                        principalTable: "Tables",
                         principalColumn: "TableId",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Reservation",
+                name: "Reservations",
                 columns: table => new
                 {
                     ReservationId = table.Column<int>(type: "int", nullable: false)
@@ -271,32 +293,38 @@ namespace Restaurant_Reservation_Management_System_Api.Migrations.AuthDb
                     StartTime = table.Column<DateTime>(type: "datetime2", nullable: false),
                     EndTime = table.Column<DateTime>(type: "datetime2", nullable: false),
                     NumberOfGuests = table.Column<int>(type: "int", nullable: false),
+                    AdminId = table.Column<int>(type: "int", nullable: true),
                     ApplicationUserId = table.Column<string>(type: "nvarchar(450)", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Reservation", x => x.ReservationId);
+                    table.PrimaryKey("PK_Reservations", x => x.ReservationId);
                     table.ForeignKey(
-                        name: "FK_Reservation_AspNetUsers_ApplicationUserId",
+                        name: "FK_Reservations_Admins_AdminId",
+                        column: x => x.AdminId,
+                        principalTable: "Admins",
+                        principalColumn: "AdminId");
+                    table.ForeignKey(
+                        name: "FK_Reservations_AspNetUsers_ApplicationUserId",
                         column: x => x.ApplicationUserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id");
                     table.ForeignKey(
-                        name: "FK_Reservation_Customer_CustomerId",
+                        name: "FK_Reservations_Customers_CustomerId",
                         column: x => x.CustomerId,
-                        principalTable: "Customer",
+                        principalTable: "Customers",
                         principalColumn: "CustomerId",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Reservation_Table_TableId",
+                        name: "FK_Reservations_Tables_TableId",
                         column: x => x.TableId,
-                        principalTable: "Table",
+                        principalTable: "Tables",
                         principalColumn: "TableId",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "OrderItem",
+                name: "OrderItems",
                 columns: table => new
                 {
                     OrderItemId = table.Column<int>(type: "int", nullable: false)
@@ -307,17 +335,17 @@ namespace Restaurant_Reservation_Management_System_Api.Migrations.AuthDb
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_OrderItem", x => x.OrderItemId);
+                    table.PrimaryKey("PK_OrderItems", x => x.OrderItemId);
                     table.ForeignKey(
-                        name: "FK_OrderItem_FoodItem_FoodItemId",
+                        name: "FK_OrderItems_FoodItems_FoodItemId",
                         column: x => x.FoodItemId,
-                        principalTable: "FoodItem",
+                        principalTable: "FoodItems",
                         principalColumn: "FoodItemId",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_OrderItem_Order_OrderId",
+                        name: "FK_OrderItems_Orders_OrderId",
                         column: x => x.OrderId,
-                        principalTable: "Order",
+                        principalTable: "Orders",
                         principalColumn: "OrderId",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -327,14 +355,14 @@ namespace Restaurant_Reservation_Management_System_Api.Migrations.AuthDb
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { "e23dfba1-7e92-4cc7-92c8-d0bdf10e8a6d", "e23dfba1-7e92-4cc7-92c8-d0bdf10e8a6d", "Customer", "CUSTOMET" },
+                    { "e23dfba1-7e92-4cc7-92c8-d0bdf10e8a6d", "e23dfba1-7e92-4cc7-92c8-d0bdf10e8a6d", "Customer", "CUSTOMER" },
                     { "ef50d628-0f80-41e0-bd63-05d384b89b65", "ef50d628-0f80-41e0-bd63-05d384b89b65", "Admin", "ADMIN" }
                 });
 
             migrationBuilder.InsertData(
                 table: "AspNetUsers",
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "LockoutEnabled", "LockoutEnd", "Name", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
-                values: new object[] { "4742a2e0-04d2-46ca-925a-bb0439e378b6", 0, "94f19e22-b8cd-404b-88a8-b15295c3b1f4", "vignesh123@gmail.com", false, false, null, "vignesh", "VIGNESH123@GMAIL.COM", "VIGNESH", "AQAAAAIAAYagAAAAEJH8qWJX1g/0SRWG0RWIF8k0Q/6xTqg0cZWg+a2b172OW4sISWcJOGLq2AUojKv1gw==", null, false, "70598118-1ee2-4319-a25e-493eeddc9ea7", false, "vignesh" });
+                values: new object[] { "4742a2e0-04d2-46ca-925a-bb0439e378b6", 0, "ec921f90-5554-4240-a560-54a6f7c8ba63", "vignesh123@gmail.com", false, false, null, "vignesh", "VIGNESH123@GMAIL.COM", "VIGNESH", "AQAAAAIAAYagAAAAENyin4bfCbK4GTPEUcACRBIouWaoCmdPu8aojbpRvOde5dvqG8EYGF6sS5C8SGW9Jw==", null, false, "0efe9468-3f7f-4360-8af1-9900ff09de90", false, "vignesh" });
 
             migrationBuilder.InsertData(
                 table: "AspNetUserRoles",
@@ -385,48 +413,58 @@ namespace Restaurant_Reservation_Management_System_Api.Migrations.AuthDb
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
-                name: "IX_FoodItem_CategoryId",
-                table: "FoodItem",
+                name: "IX_FoodItems_CategoryId",
+                table: "FoodItems",
                 column: "CategoryId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Order_ApplicationUserId",
-                table: "Order",
-                column: "ApplicationUserId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Order_CustomerId",
-                table: "Order",
-                column: "CustomerId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Order_TableId",
-                table: "Order",
-                column: "TableId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_OrderItem_FoodItemId",
-                table: "OrderItem",
+                name: "IX_OrderItems_FoodItemId",
+                table: "OrderItems",
                 column: "FoodItemId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_OrderItem_OrderId",
-                table: "OrderItem",
+                name: "IX_OrderItems_OrderId",
+                table: "OrderItems",
                 column: "OrderId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Reservation_ApplicationUserId",
-                table: "Reservation",
+                name: "IX_Orders_AdminId",
+                table: "Orders",
+                column: "AdminId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Orders_ApplicationUserId",
+                table: "Orders",
                 column: "ApplicationUserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Reservation_CustomerId",
-                table: "Reservation",
+                name: "IX_Orders_CustomerId",
+                table: "Orders",
                 column: "CustomerId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Reservation_TableId",
-                table: "Reservation",
+                name: "IX_Orders_TableId",
+                table: "Orders",
+                column: "TableId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Reservations_AdminId",
+                table: "Reservations",
+                column: "AdminId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Reservations_ApplicationUserId",
+                table: "Reservations",
+                column: "ApplicationUserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Reservations_CustomerId",
+                table: "Reservations",
+                column: "CustomerId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Reservations_TableId",
+                table: "Reservations",
                 column: "TableId");
         }
 
@@ -449,31 +487,34 @@ namespace Restaurant_Reservation_Management_System_Api.Migrations.AuthDb
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
-                name: "OrderItem");
+                name: "OrderItems");
 
             migrationBuilder.DropTable(
-                name: "Reservation");
+                name: "Reservations");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
-                name: "FoodItem");
+                name: "FoodItems");
 
             migrationBuilder.DropTable(
-                name: "Order");
+                name: "Orders");
 
             migrationBuilder.DropTable(
-                name: "MenuCategory");
+                name: "MenuCategories");
+
+            migrationBuilder.DropTable(
+                name: "Admins");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");
 
             migrationBuilder.DropTable(
-                name: "Customer");
+                name: "Customers");
 
             migrationBuilder.DropTable(
-                name: "Table");
+                name: "Tables");
         }
     }
 }
