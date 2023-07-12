@@ -32,7 +32,7 @@ namespace Restaurant_Reservation_Management_System_Api.Controllers.AdminControll
 
         // GET: api/FoodItemsControllerAdmin
         [HttpGet]
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Customer")]
         public async Task<ActionResult<ServiceResponse<IEnumerable<GetFoodItemDtoAdmin>>>> GetFoodItems()
         {
             var response = await _foodItemServicesAdmin.GetFoodItems();

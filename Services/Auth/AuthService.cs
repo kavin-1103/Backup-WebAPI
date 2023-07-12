@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Identity;
+using Restaurant_Reservation_Management_System_Api.Data;
 using Restaurant_Reservation_Management_System_Api.Dto.Auth;
 using Restaurant_Reservation_Management_System_Api.Model;
 using Restaurant_Reservation_Management_System_Api.Repository;
@@ -10,11 +11,13 @@ namespace Restaurant_Reservation_Management_System_Api.Services.Auth
     {
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly ITokenRepository _tokenRepository;
+        private readonly RestaurantDbContext _context;
 
-        public AuthService(UserManager<ApplicationUser> userManager , ITokenRepository tokenRepository)
+        public AuthService(UserManager<ApplicationUser> userManager , ITokenRepository tokenRepository , RestaurantDbContext context)
         {
             _userManager = userManager;
             _tokenRepository = tokenRepository;
+            _context = context;
         }
 
         public async Task<IdentityResult> RegisterUserAsync(RegisterRequestDto registerRequestDto)
@@ -34,6 +37,10 @@ namespace Restaurant_Reservation_Management_System_Api.Services.Auth
             {
                 await _userManager.AddToRoleAsync(user, "Customer");
             }
+
+            //Store in Registered Customer Table 
+
+            StoreInRegisteredCustomer(user);
 
             return result;
 
@@ -73,6 +80,22 @@ namespace Restaurant_Reservation_Management_System_Api.Services.Auth
         //        }
                
         //    }
+
+        private async void StoreInRegisteredCustomer(ApplicationUser user)
+        {
+            var registeredCustomer = new RegisteredCustomer()
+            {
+                RegisteredCustomerId = user.Id ,
+                CustomerName = user.Name,
+                Email = user.Email , 
+                PhoneNumber = user.PhoneNumber,
+
+            };
+            _context.RegisteredCustomers.Add(registeredCustomer);
+
+            await _context.SaveChangesAsync();
+            
+        }
 
       
 

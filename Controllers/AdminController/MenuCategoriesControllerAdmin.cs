@@ -30,7 +30,7 @@ namespace Restaurant_Reservation_Management_System_Api.Controllers.AdminControll
 
         // GET: api/MenuCategoriesControllerAdmin
         [HttpGet]
-        [Authorize(Roles = "Customer")]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult<IEnumerable<GetMenuCategoryDtoAdmin>>> GetMenuCategories()
         {
             var response = await _menuCategoryServices.GetMenuCategory();

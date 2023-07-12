@@ -30,13 +30,15 @@ namespace Restaurant_Reservation_Management_System_Api.Data
 
         public DbSet<OrderItem> OrderItems { get; set; }
 
+        public DbSet<RegisteredCustomer> RegisteredCustomers { get; set; }
+
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
 
-            var adminRoleId = "ef50d628-0f80-41e0-bd63-05d384b89b65";
+            var adminRoleId = "1";
 
-            var customerRoleId = "e23dfba1-7e92-4cc7-92c8-d0bdf10e8a6d";
+            var customerRoleId = "2";
 
             //create new Admin and Customer Role
             var roles = new List<IdentityRole>
@@ -65,7 +67,7 @@ namespace Restaurant_Reservation_Management_System_Api.Data
             //Create an Admin User
 
 
-            var adminUserId = "4742a2e0-04d2-46ca-925a-bb0439e378b6";
+            var adminUserId = "1";
 
             var admin = new ApplicationUser()
             {

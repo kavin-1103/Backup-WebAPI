@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "3sEV08OTKcyLdPV9lYu1jSIm9X+Vtd5aHHkg80UJAzJanvbtDDMYA7kPXMDudlbgWnAYy7RadCJvh2XBio0pXQ==",
+  "dgSpecHash": "GyW3xK4+pfriUyWA+uHmHrRGBFXjh45/zjOTlygUl+Ptosxy/AhlNmNEC1BH1AdIgGbhUTg/556Aaln3GgkJIQ==",
   "success": true,
   "projectFilePath": "C:\\Users\\Vigne\\source\\repos\\Restaurant_Reservation_Management_System_Api\\Restaurant_Reservation_Management_System_Api.csproj",
   "expectedPackageFiles": [
@@ -58,9 +58,10 @@
     "C:\\Users\\Vigne\\.nuget\\packages\\humanizer.core.zh-cn\\2.14.1\\humanizer.core.zh-cn.2.14.1.nupkg.sha512",
     "C:\\Users\\Vigne\\.nuget\\packages\\humanizer.core.zh-hans\\2.14.1\\humanizer.core.zh-hans.2.14.1.nupkg.sha512",
     "C:\\Users\\Vigne\\.nuget\\packages\\humanizer.core.zh-hant\\2.14.1\\humanizer.core.zh-hant.2.14.1.nupkg.sha512",
+    "C:\\Users\\Vigne\\.nuget\\packages\\microsoft.aspnet.identity.core\\2.2.3\\microsoft.aspnet.identity.core.2.2.3.nupkg.sha512",
     "C:\\Users\\Vigne\\.nuget\\packages\\microsoft.aspnetcore.authentication.jwtbearer\\7.0.8\\microsoft.aspnetcore.authentication.jwtbearer.7.0.8.nupkg.sha512",
-    "C:\\Users\\Vigne\\.nuget\\packages\\microsoft.aspnetcore.cryptography.internal\\7.0.8\\microsoft.aspnetcore.cryptography.internal.7.0.8.nupkg.sha512",
-    "C:\\Users\\Vigne\\.nuget\\packages\\microsoft.aspnetcore.cryptography.keyderivation\\7.0.8\\microsoft.aspnetcore.cryptography.keyderivation.7.0.8.nupkg.sha512",
+    "C:\\Users\\Vigne\\.nuget\\packages\\microsoft.aspnetcore.cryptography.internal\\7.0.9\\microsoft.aspnetcore.cryptography.internal.7.0.9.nupkg.sha512",
+    "C:\\Users\\Vigne\\.nuget\\packages\\microsoft.aspnetcore.cryptography.keyderivation\\7.0.9\\microsoft.aspnetcore.cryptography.keyderivation.7.0.9.nupkg.sha512",
     "C:\\Users\\Vigne\\.nuget\\packages\\microsoft.aspnetcore.identity.entityframeworkcore\\7.0.8\\microsoft.aspnetcore.identity.entityframeworkcore.7.0.8.nupkg.sha512",
     "C:\\Users\\Vigne\\.nuget\\packages\\microsoft.aspnetcore.openapi\\7.0.7\\microsoft.aspnetcore.openapi.7.0.7.nupkg.sha512",
     "C:\\Users\\Vigne\\.nuget\\packages\\microsoft.aspnetcore.razor.language\\6.0.11\\microsoft.aspnetcore.razor.language.6.0.11.nupkg.sha512",
@@ -97,7 +98,7 @@
     "C:\\Users\\Vigne\\.nuget\\packages\\microsoft.extensions.dependencyinjection\\7.0.0\\microsoft.extensions.dependencyinjection.7.0.0.nupkg.sha512",
     "C:\\Users\\Vigne\\.nuget\\packages\\microsoft.extensions.dependencyinjection.abstractions\\7.0.0\\microsoft.extensions.dependencyinjection.abstractions.7.0.0.nupkg.sha512",
     "C:\\Users\\Vigne\\.nuget\\packages\\microsoft.extensions.dependencymodel\\7.0.0\\microsoft.extensions.dependencymodel.7.0.0.nupkg.sha512",
-    "C:\\Users\\Vigne\\.nuget\\packages\\microsoft.extensions.identity.core\\7.0.8\\microsoft.extensions.identity.core.7.0.8.nupkg.sha512",
+    "C:\\Users\\Vigne\\.nuget\\packages\\microsoft.extensions.identity.core\\7.0.9\\microsoft.extensions.identity.core.7.0.9.nupkg.sha512",
     "C:\\Users\\Vigne\\.nuget\\packages\\microsoft.extensions.identity.stores\\7.0.8\\microsoft.extensions.identity.stores.7.0.8.nupkg.sha512",
     "C:\\Users\\Vigne\\.nuget\\packages\\microsoft.extensions.logging\\7.0.0\\microsoft.extensions.logging.7.0.0.nupkg.sha512",
     "C:\\Users\\Vigne\\.nuget\\packages\\microsoft.extensions.logging.abstractions\\7.0.0\\microsoft.extensions.logging.abstractions.7.0.0.nupkg.sha512",
@@ -246,5 +247,16 @@
     "C:\\Users\\Vigne\\.nuget\\packages\\system.xml.readerwriter\\4.3.0\\system.xml.readerwriter.4.3.0.nupkg.sha512",
     "C:\\Users\\Vigne\\.nuget\\packages\\system.xml.xdocument\\4.3.0\\system.xml.xdocument.4.3.0.nupkg.sha512"
   ],
-  "logs": []
+  "logs": [
+    {
+      "code": "NU1701",
+      "level": "Warning",
+      "warningLevel": 1,
+      "message": "Package 'Microsoft.AspNet.Identity.Core 2.2.3' was restored using '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8, .NETFramework,Version=v4.8.1' instead of the project target framework 'net7.0'. This package may not be fully compatible with your project.",
+      "libraryId": "Microsoft.AspNet.Identity.Core",
+      "targetGraphs": [
+        "net7.0"
+      ]
+    }
+  ]
 }

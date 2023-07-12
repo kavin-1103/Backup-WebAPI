@@ -669,6 +669,19 @@
           }
         }
       },
+      "Microsoft.AspNet.Identity.Core/2.2.3": {
+        "type": "package",
+        "compile": {
+          "lib/net45/Microsoft.AspNet.Identity.Core.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net45/Microsoft.AspNet.Identity.Core.dll": {
+            "related": ".xml"
+          }
+        }
+      },
       "Microsoft.AspNetCore.Authentication.JwtBearer/7.0.8": {
         "type": "package",
         "dependencies": {
@@ -688,7 +701,7 @@
           "Microsoft.AspNetCore.App"
         ]
       },
-      "Microsoft.AspNetCore.Cryptography.Internal/7.0.8": {
+      "Microsoft.AspNetCore.Cryptography.Internal/7.0.9": {
         "type": "package",
         "compile": {
           "lib/net7.0/Microsoft.AspNetCore.Cryptography.Internal.dll": {
@@ -701,10 +714,10 @@
           }
         }
       },
-      "Microsoft.AspNetCore.Cryptography.KeyDerivation/7.0.8": {
+      "Microsoft.AspNetCore.Cryptography.KeyDerivation/7.0.9": {
         "type": "package",
         "dependencies": {
-          "Microsoft.AspNetCore.Cryptography.Internal": "7.0.8"
+          "Microsoft.AspNetCore.Cryptography.Internal": "7.0.9"
         },
         "compile": {
           "lib/net7.0/Microsoft.AspNetCore.Cryptography.KeyDerivation.dll": {
@@ -1633,10 +1646,10 @@
           "buildTransitive/net6.0/_._": {}
         }
       },
-      "Microsoft.Extensions.Identity.Core/7.0.8": {
+      "Microsoft.Extensions.Identity.Core/7.0.9": {
         "type": "package",
         "dependencies": {
-          "Microsoft.AspNetCore.Cryptography.KeyDerivation": "7.0.8",
+          "Microsoft.AspNetCore.Cryptography.KeyDerivation": "7.0.9",
           "Microsoft.Extensions.Logging": "7.0.0",
           "Microsoft.Extensions.Options": "7.0.1"
         },
@@ -4993,6 +5006,19 @@
         "logo.png"
       ]
     },
+    "Microsoft.AspNet.Identity.Core/2.2.3": {
+      "sha512": "Mv5FpoaxspE8hlWLE4r1IdZtovg/OyFgVRhxQbx47J4sqdLImN1hnM1lnwCj+/wLmqtqFk/RYMoZ5GAcwm/00g==",
+      "type": "package",
+      "path": "microsoft.aspnet.identity.core/2.2.3",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "lib/net45/Microsoft.AspNet.Identity.Core.dll",
+        "lib/net45/Microsoft.AspNet.Identity.Core.xml",
+        "microsoft.aspnet.identity.core.2.2.3.nupkg.sha512",
+        "microsoft.aspnet.identity.core.nuspec"
+      ]
+    },
     "Microsoft.AspNetCore.Authentication.JwtBearer/7.0.8": {
       "sha512": "UWGvF86d2q90e1ync37Yg+yg2GRSeSh9y/Q5YRFw42YfzTDQd0X6somujDFVc9HWn6zVB7osSZnxHMW8BwoRSA==",
       "type": "package",
@@ -5008,10 +5034,10 @@
         "microsoft.aspnetcore.authentication.jwtbearer.nuspec"
       ]
     },
-    "Microsoft.AspNetCore.Cryptography.Internal/7.0.8": {
-      "sha512": "zEizZhRWT7zlPphdDSu3lcTjd6Lhn6i4LyE0fvx/Ru+RbBrMATinfU2Z1wKAX/yNLdMM7LSwMoPmBR4xum6jkw==",
+    "Microsoft.AspNetCore.Cryptography.Internal/7.0.9": {
+      "sha512": "KLuY2N0SOEFEU0B9AgM0Idgn08mu2/4nk2biW9uG9TiYC7Pm2Z6AfxHbTV+dQnYK34lEt27A+EhwI6NzQVhvxg==",
       "type": "package",
-      "path": "microsoft.aspnetcore.cryptography.internal/7.0.8",
+      "path": "microsoft.aspnetcore.cryptography.internal/7.0.9",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
@@ -5023,14 +5049,14 @@
         "lib/net7.0/Microsoft.AspNetCore.Cryptography.Internal.xml",
         "lib/netstandard2.0/Microsoft.AspNetCore.Cryptography.Internal.dll",
         "lib/netstandard2.0/Microsoft.AspNetCore.Cryptography.Internal.xml",
-        "microsoft.aspnetcore.cryptography.internal.7.0.8.nupkg.sha512",
+        "microsoft.aspnetcore.cryptography.internal.7.0.9.nupkg.sha512",
         "microsoft.aspnetcore.cryptography.internal.nuspec"
       ]
     },
-    "Microsoft.AspNetCore.Cryptography.KeyDerivation/7.0.8": {
-      "sha512": "M7CEWYQXGsOqNEAWFki8ptAOldJMvr2nw8IpqFa6J+rnH+u20pYMo6Mn32pLmgFC0UzwIPmk0WI1y+M4U9z8aQ==",
+    "Microsoft.AspNetCore.Cryptography.KeyDerivation/7.0.9": {
+      "sha512": "oQKTD4Uhm1CPjhhQmxYeqL8RyR7V+xnw2ug38igqQA2OSLS35enNG+uL/PWLeIEnVb4b6fGfWmmgjzY0hnrMLw==",
       "type": "package",
-      "path": "microsoft.aspnetcore.cryptography.keyderivation/7.0.8",
+      "path": "microsoft.aspnetcore.cryptography.keyderivation/7.0.9",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
@@ -5042,7 +5068,7 @@
         "lib/net7.0/Microsoft.AspNetCore.Cryptography.KeyDerivation.xml",
         "lib/netstandard2.0/Microsoft.AspNetCore.Cryptography.KeyDerivation.dll",
         "lib/netstandard2.0/Microsoft.AspNetCore.Cryptography.KeyDerivation.xml",
-        "microsoft.aspnetcore.cryptography.keyderivation.7.0.8.nupkg.sha512",
+        "microsoft.aspnetcore.cryptography.keyderivation.7.0.9.nupkg.sha512",
         "microsoft.aspnetcore.cryptography.keyderivation.nuspec"
       ]
     },
@@ -6459,10 +6485,10 @@
         "useSharedDesignerContext.txt"
       ]
     },
-    "Microsoft.Extensions.Identity.Core/7.0.8": {
-      "sha512": "kb7RoSkuQ1YVOwbv5C81O1L/b5ja96U5W//IRw+XQ20rDi7hof7dxUU5bhbqszpj/89IQ87/dNaE5PJKVPm9Aw==",
+    "Microsoft.Extensions.Identity.Core/7.0.9": {
+      "sha512": "HWA/1INVGoxlQrvlLsrGDLQOuJSqdEkCmglmwcvXWWI2o7RwzWP0S4+aIRGNZVY51vQPIJ9m/XQ+sXq41YCtJg==",
       "type": "package",
-      "path": "microsoft.extensions.identity.core/7.0.8",
+      "path": "microsoft.extensions.identity.core/7.0.9",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
@@ -6474,7 +6500,7 @@
         "lib/net7.0/Microsoft.Extensions.Identity.Core.xml",
         "lib/netstandard2.0/Microsoft.Extensions.Identity.Core.dll",
         "lib/netstandard2.0/Microsoft.Extensions.Identity.Core.xml",
-        "microsoft.extensions.identity.core.7.0.8.nupkg.sha512",
+        "microsoft.extensions.identity.core.7.0.9.nupkg.sha512",
         "microsoft.extensions.identity.core.nuspec"
       ]
     },
@@ -12143,6 +12169,7 @@
     "net7.0": [
       "AutoMapper >= 12.0.1",
       "AutoMapper.Extensions.Microsoft.DependencyInjection >= 12.0.1",
+      "Microsoft.AspNet.Identity.Core >= 2.2.3",
       "Microsoft.AspNetCore.Authentication.JwtBearer >= 7.0.8",
       "Microsoft.AspNetCore.Identity.EntityFrameworkCore >= 7.0.8",
       "Microsoft.AspNetCore.OpenApi >= 7.0.7",
@@ -12150,6 +12177,7 @@
       "Microsoft.EntityFrameworkCore.Design >= 7.0.8",
       "Microsoft.EntityFrameworkCore.SqlServer >= 7.0.8",
       "Microsoft.EntityFrameworkCore.Tools >= 7.0.8",
+      "Microsoft.Extensions.Identity.Core >= 7.0.9",
       "Microsoft.VisualStudio.Web.CodeGeneration.Design >= 7.0.7",
       "Swashbuckle.AspNetCore >= 6.5.0",
       "Swashbuckle.AspNetCore.Filters >= 7.0.6"
@@ -12203,6 +12231,10 @@
             "target": "Package",
             "version": "[12.0.1, )"
           },
+          "Microsoft.AspNet.Identity.Core": {
+            "target": "Package",
+            "version": "[2.2.3, )"
+          },
           "Microsoft.AspNetCore.Authentication.JwtBearer": {
             "target": "Package",
             "version": "[7.0.8, )"
@@ -12234,6 +12266,10 @@
             "suppressParent": "All",
             "target": "Package",
             "version": "[7.0.8, )"
+          },
+          "Microsoft.Extensions.Identity.Core": {
+            "target": "Package",
+            "version": "[7.0.9, )"
           },
           "Microsoft.VisualStudio.Web.CodeGeneration.Design": {
             "target": "Package",
@@ -12270,5 +12306,17 @@
         "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.302\\RuntimeIdentifierGraph.json"
       }
     }
-  }
+  },
+  "logs": [
+    {
+      "code": "NU1701",
+      "level": "Warning",
+      "warningLevel": 1,
+      "message": "Package 'Microsoft.AspNet.Identity.Core 2.2.3' was restored using '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8, .NETFramework,Version=v4.8.1' instead of the project target framework 'net7.0'. This package may not be fully compatible with your project.",
+      "libraryId": "Microsoft.AspNet.Identity.Core",
+      "targetGraphs": [
+        "net7.0"
+      ]
+    }
+  ]
 }

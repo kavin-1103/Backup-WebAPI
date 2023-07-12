@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Restaurant_Reservation_Management_System_Api.Data;
 
@@ -11,9 +12,11 @@ using Restaurant_Reservation_Management_System_Api.Data;
 namespace Restaurant_Reservation_Management_System_Api.Migrations
 {
     [DbContext(typeof(RestaurantDbContext))]
-    partial class RestaurantDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230711174941_ChangedInitialId")]
+    partial class ChangedInitialId
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -285,16 +288,16 @@ namespace Restaurant_Reservation_Management_System_Api.Migrations
                         {
                             Id = "1",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "53c4baaa-aed0-4698-a1b6-a8f3e5de8f34",
+                            ConcurrencyStamp = "20cbb376-9547-4bee-886d-fc65e0234b5a",
                             Email = "vignesh123@gmail.com",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
                             Name = "vignesh",
                             NormalizedEmail = "VIGNESH123@GMAIL.COM",
                             NormalizedUserName = "VIGNESH",
-                            PasswordHash = "AQAAAAIAAYagAAAAEKihVhq0XdYrUC2oolBW2XB2bmcCS9fBMIUT+m/PuT6QsWG4wi9SgvpYv3iKlMe6OQ==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEEnLPMclx36pdGJv7I8OKeSbk8ILkOFW1nSS50cUtnf/QPI3ypvn7DZS9ZNy264mbQ==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "62a9d4d3-336c-4808-950e-a206efb2c47a",
+                            SecurityStamp = "0fe63833-a4c7-4728-8db5-4420057a1092",
                             TwoFactorEnabled = false,
                             UserName = "vignesh"
                         });
@@ -439,28 +442,6 @@ namespace Restaurant_Reservation_Management_System_Api.Migrations
                     b.HasIndex("OrderId");
 
                     b.ToTable("OrderItems");
-                });
-
-            modelBuilder.Entity("Restaurant_Reservation_Management_System_Api.Model.RegisteredCustomer", b =>
-                {
-                    b.Property<string>("RegisteredCustomerId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("CustomerName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Email")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PhoneNumber")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("RegisteredCustomerId");
-
-                    b.ToTable("RegisteredCustomers");
                 });
 
             modelBuilder.Entity("Restaurant_Reservation_Management_System_Api.Model.Reservation", b =>
