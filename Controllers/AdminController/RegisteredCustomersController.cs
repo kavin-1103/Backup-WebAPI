@@ -24,7 +24,7 @@ namespace Restaurant_Reservation_Management_System_Api.Controllers.AdminControll
 
         // GET: api/RegisteredCustomers
         [HttpGet]
-        [Authorize(Roles = "Admin")]
+        //[Authorize(Roles = "Admin")]
         public async Task<ActionResult<ServiceResponse<IEnumerable<RegisteredCustomer>>>> GetRegisteredCustomers()
         {
             var response = new ServiceResponse<IEnumerable<RegisteredCustomer>>();
@@ -62,8 +62,31 @@ namespace Restaurant_Reservation_Management_System_Api.Controllers.AdminControll
             return registeredCustomer;
         }
 
-    
-      
+        // GET: api/RegisteredCustomers
+        [HttpGet]
+        [Route("/CustomerCount")]
+       // [Authorize(Roles = "Admin")]
+        public async Task<ActionResult<ServiceResponse<int>>> GetRegisteredCustomersCount()
+        {
+            var response = new ServiceResponse<int>();
+
+            int customerCount = await _context.RegisteredCustomers.CountAsync();
+
+            if (customerCount == 0)
+            {
+                response.Success = false;
+                response.Message = "No Customers Found";
+                return NotFound(response);
+            }
+
+            response.Data = customerCount;
+            response.Success = true;
+            response.Message = "Fetched Total Number of Registered Customers Successfully!";
+            return Ok(response);
+        }
+
+
+
         private bool RegisteredCustomerExists(string id)
         {
             return (_context.RegisteredCustomers?.Any(e => e.RegisteredCustomerId == id)).GetValueOrDefault();

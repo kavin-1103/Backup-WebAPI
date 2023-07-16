@@ -1,4 +1,6 @@
 ﻿using AutoMapper;
+using Azure;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Restaurant_Reservation_Management_System_Api.Data;
 using Restaurant_Reservation_Management_System_Api.Dto.Admin.FoodItem;
@@ -196,6 +198,29 @@ namespace Restaurant_Reservation_Management_System_Api.Services.Admin.FoodItemSe
 
             return serviceResponse;
 
+
+
+        }
+
+        public async Task<ServiceResponse<int>> GetFoodItemsCount()
+        {
+
+            var serviceResponse = new ServiceResponse<int>();
+            int foodItemCount = await _context.FoodItems.CountAsync();
+            
+
+            if (foodItemCount == 0)
+            {
+                serviceResponse.Success = false;
+                serviceResponse.Message = "No Food Items Found";
+                return serviceResponse;
+            }
+
+
+            serviceResponse.Data = foodItemCount;
+            serviceResponse.Success = true;
+            serviceResponse.Message = "Fetched Total Number of Food Items Successfully!";
+            return serviceResponse;
 
 
         }

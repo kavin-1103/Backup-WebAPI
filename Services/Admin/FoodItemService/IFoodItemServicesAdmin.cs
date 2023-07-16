@@ -1,4 +1,5 @@
-﻿using Restaurant_Reservation_Management_System_Api.Dto.Admin.FoodItem;
+﻿using Microsoft.AspNetCore.Mvc;
+using Restaurant_Reservation_Management_System_Api.Dto.Admin.FoodItem;
 using Restaurant_Reservation_Management_System_Api.Model;
 
 namespace Restaurant_Reservation_Management_System_Api.Services.Admin.FoodItemService
@@ -11,5 +12,7 @@ namespace Restaurant_Reservation_Management_System_Api.Services.Admin.FoodItemSe
 
         Task<ServiceResponse<GetFoodItemDtoAdmin>> UpdateFoodItem(int id, AddFoodItemDtoAdmin addFoodItemDtoAdmin);
         Task<ServiceResponse<string>> DeleteFoodItem(int id);
+
+        Task<ServiceResponse<int>> GetFoodItemsCount();
     }
 }

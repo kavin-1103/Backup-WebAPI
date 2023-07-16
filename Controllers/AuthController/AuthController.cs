@@ -77,79 +77,48 @@ namespace Restaurant_Reservation_Management_System_Api.Controllers.AuthControlle
                 
             }
 
-            if (identityUser is not null)
-            {
                 //Check Password
 
-                var checkPasswordResult = await _userManager.CheckPasswordAsync(identityUser, loginRequestDto.Password);
+            var checkPasswordResult = await _userManager.CheckPasswordAsync(identityUser, loginRequestDto.Password);
 
-                if (checkPasswordResult)
+
+            if(!checkPasswordResult)
+             {
+                 response.Success = false;
+                 response.Message = "Incorrect Password";
+                 return NotFound(response);
+            }
+
+            if (checkPasswordResult && identityUser is not null)
+
+            {
+
+                var jwtToken = await _tokenRepository.CreateJwtToken(identityUser);
+
+                var loginResponseDto = new LoginResponseDto()
                 {
-                    //var roles = await _userManager.GetRolesAsync(identityUser);
+                    CustomerId = identityUser.Id,
+                    Email = loginRequestDto.Email,
+                    Token = jwtToken,
+                    Roles = await _userManager.GetRolesAsync(identityUser),
 
-                    //Console.WriteLine(roles);
+                };
+                response.Data = loginResponseDto;
+                response.Success = true;
+                response.Message = "User Logged In Successfully!";
 
-                    // Create a Token and Response
-
-                    //var jwtToken = _tokenRepository.CreateJwtToken(identityUser, roles.ToList());
-                    //var response = new LoginResponseDto()
-                    //{
-                    //    Email = loginRequestDto.Email,
-                    //    Roles = roles.ToList(),
-                    //    Token = jwtToken,
-
-
-
-                    //};
-
-
-                    var jwtToken = await _tokenRepository.CreateJwtToken(identityUser);
-
-                    var loginResponseDto = new LoginResponseDto()
-                    {
-                        CustomerId = identityUser.Id,
-                        Email = loginRequestDto.Email,
-                        Token = jwtToken,
-                        Roles = await _userManager.GetRolesAsync(identityUser),
-
-                    };
-                    response.Data = loginResponseDto;
-                    response.Success  = true;
-                    response.Message = "User Logged In Successfully!";
-
-                    return Ok(response);
-
-                    //var authClaims = new List<Claim>
-                    //{
-                    //    new Claim(ClaimTypes.Name, identityUser.UserName),
-                    //    new Claim(ClaimTypes.NameIdentifier, identityUser.Id),
-                    //    new Claim("JWTID", Guid.NewGuid().ToString()),
-
-                    //};
-                    //foreach (var userRole in roles)
-                    //{
-                    //    authClaims.Add(new Claim(ClaimTypes.Role, userRole));
-                    //}
-
-                    //var jwtToken = _tokenRepository.CreateJwtToken(authClaims);
-
-                    //return new AuthServiceResponseDto()
-                    //{
-                    //    IsSucceed = true,
-                    //    Message = jwtToken,
-                    //};
-
-
-                }
-                
+                return Ok(response);
 
 
             }
-            //return new AuthServiceResponseDto()
-            //    {
-            //        IsSucceed = false,
-            //        Message = "",
-            //    };
+            else 
+            {
+                response.Success = false;
+                return Unauthorized();
+
+            }
+
+         
 
             ModelState.AddModelError("", "Email Or Password incorrect");
 

@@ -32,7 +32,7 @@ namespace Restaurant_Reservation_Management_System_Api.Controllers.AdminControll
 
         // GET: api/FoodItemsControllerAdmin
         [HttpGet]
-        [Authorize(Roles = "Customer")]
+        
         public async Task<ActionResult<ServiceResponse<IEnumerable<GetFoodItemDtoAdmin>>>> GetFoodItems()
         {
             var response = await _foodItemServicesAdmin.GetFoodItems();
@@ -47,6 +47,7 @@ namespace Restaurant_Reservation_Management_System_Api.Controllers.AdminControll
 
         // GET: api/FoodItemsControllerAdmin/5
         [HttpGet("{id}")]
+        [Authorize(Roles ="Admin")]
         public async Task<ActionResult<FoodItem>> GetFoodItem(int id)
         {
           if (_context.FoodItems == null)
@@ -102,6 +103,23 @@ namespace Restaurant_Reservation_Management_System_Api.Controllers.AdminControll
                 return BadRequest(response);
             }
             return Ok(response);
+
+        }
+
+        [HttpGet]
+        [Route("CountFoodItems")]
+       // [Authorize(Roles ="Admin")]
+
+        public async Task<ActionResult<ServiceResponse<int>>> GetFoodItemsCount()
+        {
+            var response = await _foodItemServicesAdmin.GetFoodItemsCount();
+
+            if (response.Success == false)
+            {
+                return BadRequest(response);
+            }
+            return Ok(response);
+
 
         }
 

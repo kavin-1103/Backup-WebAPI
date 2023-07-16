@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Restaurant_Reservation_Management_System_Api.Data;
 
@@ -11,9 +12,11 @@ using Restaurant_Reservation_Management_System_Api.Data;
 namespace Restaurant_Reservation_Management_System_Api.Migrations
 {
     [DbContext(typeof(RestaurantDbContext))]
-    partial class RestaurantDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230716055052_ChangedCusotmerAndAdminTable")]
+    partial class ChangedCusotmerAndAdminTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -284,16 +287,16 @@ namespace Restaurant_Reservation_Management_System_Api.Migrations
                         {
                             Id = "1",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "da73a21d-04ba-41cf-8cdd-7133e5cf4471",
+                            ConcurrencyStamp = "3a823b0b-08be-47fa-8f62-60c788de6a3b",
                             Email = "vignesh123@gmail.com",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
                             Name = "vignesh",
                             NormalizedEmail = "VIGNESH123@GMAIL.COM",
                             NormalizedUserName = "VIGNESH",
-                            PasswordHash = "AQAAAAIAAYagAAAAEH05P0dg5vjWhgMoBMshM4LFVSxFaSznYeDAQLKWpSXH1zvSjLrFpkikmbQTDnpwMg==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEIDLZlc7aUPRG9M/cujI58F8yrT8igkIg22oE7+sADEzAO/f2W7lx/WdkbdbeZh/Vw==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "d531cd63-086d-4226-b26e-bbaf1241172a",
+                            SecurityStamp = "96397060-78f2-405e-91f8-076d122bbde4",
                             TwoFactorEnabled = false,
                             UserName = "vignesh"
                         });
@@ -386,10 +389,6 @@ namespace Restaurant_Reservation_Management_System_Api.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("OrderId"));
 
-                    b.Property<string>("ApplicationUserId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
                     b.Property<DateTime>("OrderDate")
                         .HasColumnType("datetime2");
 
@@ -397,8 +396,6 @@ namespace Restaurant_Reservation_Management_System_Api.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("OrderId");
-
-                    b.HasIndex("ApplicationUserId");
 
                     b.HasIndex("TableId");
 
@@ -584,19 +581,11 @@ namespace Restaurant_Reservation_Management_System_Api.Migrations
 
             modelBuilder.Entity("Restaurant_Reservation_Management_System_Api.Model.Order", b =>
                 {
-                    b.HasOne("Restaurant_Reservation_Management_System_Api.Model.ApplicationUser", "ApplicationUser")
-                        .WithMany("Orders")
-                        .HasForeignKey("ApplicationUserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("Restaurant_Reservation_Management_System_Api.Model.Table", "Table")
                         .WithMany("Orders")
                         .HasForeignKey("TableId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("ApplicationUser");
 
                     b.Navigation("Table");
                 });
@@ -654,8 +643,6 @@ namespace Restaurant_Reservation_Management_System_Api.Migrations
 
             modelBuilder.Entity("Restaurant_Reservation_Management_System_Api.Model.ApplicationUser", b =>
                 {
-                    b.Navigation("Orders");
-
                     b.Navigation("Reservations");
                 });
 

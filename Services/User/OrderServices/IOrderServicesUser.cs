@@ -6,6 +6,10 @@ namespace Restaurant_Reservation_Management_System_Api.Services.User.OrderServic
     public interface IOrderServicesUser
     {
 
-        Task<ServiceResponse<GetOrderDtoUser>> AddOrder(AddOrderDtoUser addOrderDtoUser);
+        Task<ServiceResponse<GetOrderDtoUser>> AddOrder(string customerIdClaim , AddOrderDtoUser addOrderDtoUser);
+
+        Task<ServiceResponse<IEnumerable<GetAllOrderDto>>> OrderDetails(string customerId);
+
+        Task<ServiceResponse<IEnumerable<GetAllOrderDto>>> GetAllOrders();
     }
 }

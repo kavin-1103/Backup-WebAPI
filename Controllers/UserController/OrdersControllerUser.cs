@@ -1,9 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Restaurant_Reservation_Management_System_Api.Data;
@@ -18,25 +21,54 @@ namespace Restaurant_Reservation_Management_System_Api.Controllers.UserControlle
     public class OrdersControllerUser : ControllerBase
     {
         private readonly RestaurantDbContext _context;
+      //  private readonly UserManager<ApplicationUser> _userManager;
+
 
         private readonly IOrderServicesUser _orderServiceUser;
 
-        public OrdersControllerUser(RestaurantDbContext context , IOrderServicesUser orderServicesUser)
+        public OrdersControllerUser(RestaurantDbContext context , IOrderServicesUser orderServicesUser )
         {
             _context = context;
             _orderServiceUser = orderServicesUser;
+           // _userManager = userManager;
         }
 
        
         // GET: api/OrdersControllerUser
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Order>>> GetOrders()
+        [Authorize(Roles ="Customer")]
+        public async Task<ActionResult<IEnumerable<GetOrderDtoUser>>> GetOrders()
         {
-          if (_context.Orders == null)
-          {
-              return NotFound();
-          }
-            return await _context.Orders.ToListAsync();
+            var customerIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
+            if (customerIdClaim == null)
+            {
+                return BadRequest();
+            }
+            var customerId = customerIdClaim.Value;
+
+            var response = await _orderServiceUser.OrderDetails(customerId);
+            if(!response.Success)
+            {
+                return BadRequest(response);
+            }
+            return Ok(response);    
+              //if (_context.Orders == null)
+              //{
+              //    return NotFound();
+              //}
+              //  return await _context.Orders.ToListAsync();
+        }
+
+        [HttpGet]
+        [Route("GetAllOrders")]
+        public async Task<ActionResult<ServiceResponse<IEnumerable<GetAllOrderDto>>>> GetAllOrders()
+        {
+            var response = await _orderServiceUser.GetAllOrders();
+            if(!response.Success)
+            {
+                return BadRequest(response);
+            }
+            return Ok(response);
         }
 
         // GET: api/OrdersControllerUser/5
@@ -91,9 +123,17 @@ namespace Restaurant_Reservation_Management_System_Api.Controllers.UserControlle
         // POST: api/OrdersControllerUser
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
+        [Authorize(Roles = "Customer")]
         public async Task<ActionResult<ServiceResponse<GetOrderDtoUser>>> AddOrder(AddOrderDtoUser addOrderDtoUser)
         {
-            var response = await _orderServiceUser.AddOrder(addOrderDtoUser);
+            var customerIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
+            if(customerIdClaim==null)
+            {
+                return BadRequest();
+            }
+            var customerId = customerIdClaim.Value;
+            var response = await _orderServiceUser.AddOrder(customerId ,addOrderDtoUser);
+            
             if(response.Success==false)
             {
                 return BadRequest(response);
@@ -126,5 +166,8 @@ namespace Restaurant_Reservation_Management_System_Api.Controllers.UserControlle
         {
             return (_context.Orders?.Any(e => e.OrderId == id)).GetValueOrDefault();
         }
+
+
+        
     }
 }

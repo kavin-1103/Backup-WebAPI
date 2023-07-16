@@ -38,6 +38,7 @@ builder.Services.Configure<IdentityOptions>(options =>
 
 
 
+builder.Services.AddHttpContextAccessor();
 builder.Services.AddSwaggerGen(c =>
 {
     c.AddSecurityDefinition("oauth2", new OpenApiSecurityScheme
@@ -58,6 +59,9 @@ builder.Services.AddSwaggerGen();
 
 
 builder.Services.AddAutoMapper(typeof(Program).Assembly);
+builder.Services.AddScoped<IAuthService, AuthService>();
+
+builder.Services.AddScoped<ITokenRepository, TokenRepository>();
 builder.Services.AddScoped<ITableServicesAdmin, TableServicesAdmin>();
 builder.Services.AddScoped<IMenuCategoryServicesAdmin, MenuCategoryServicesAdmin>();
 
@@ -65,8 +69,8 @@ builder.Services.AddScoped<IFoodItemServicesAdmin , FoodItemServicesAdmin>();
 builder.Services.AddScoped<IReservationServicesUser, ReservationServicesUser>();
 builder.Services.AddScoped<ICustomerServicesUser , CustomerServicesUser>();
 builder.Services.AddScoped<IOrderServicesUser, OrderServicesUser>();
-builder.Services.AddScoped<IAuthService ,  AuthService>();
-builder.Services.AddScoped<ITokenRepository, TokenRepository>();
+
+
 
 
 builder.Services.AddControllers();

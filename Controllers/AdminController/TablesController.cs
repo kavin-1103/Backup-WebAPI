@@ -65,6 +65,7 @@ namespace Restaurant_Reservation_Management_System_Api.Controllers.AdminControll
             return table;
         }
 
+      
         // PUT: api/Tables/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
@@ -79,30 +80,7 @@ namespace Restaurant_Reservation_Management_System_Api.Controllers.AdminControll
 
             }
             return Ok(response);    
-            //if (id != table.TableId)
-            //{
-            //    return BadRequest();
-            //}
-
-            //_context.Entry(table).State = EntityState.Modified;
-
-            //try
-            //{
-            //    await _context.SaveChangesAsync();
-            //}
-            //catch (DbUpdateConcurrencyException)
-            //{
-            //    if (!TableExists(id))
-            //    {
-            //        return NotFound();
-            //    }
-            //    else
-            //    {
-            //        throw;
-            //    }
-            //}
-
-            //return NoContent();
+          
         }
 
         // POST: api/Tables
@@ -144,24 +122,9 @@ namespace Restaurant_Reservation_Management_System_Api.Controllers.AdminControll
 
             return Ok(response);
 
-            //if (_context.Tables == null)
-            //{
-            //    serviceResponse.Message = "Table Not Found";
-            //    serviceResponse.Success = false; 
-
-            //    return NotFound();
-            //}
-            //var table = await _context.Tables.FindAsync(id);
-            //if (table == null)
-            //{
-            //    return NotFound();
-            //}
-
-            //_context.Tables.Remove(table);
-            //await _context.SaveChangesAsync();
-
-            //return NoContent();
         }
+
+
 
         private bool TableExists(int id)
         {

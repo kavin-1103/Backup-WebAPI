@@ -42,18 +42,18 @@ namespace Restaurant_Reservation_Management_System_Api.Repository
 
             var credentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
 
-            var tokenDescriptor = new SecurityTokenDescriptor
-            {
-                Subject = new ClaimsIdentity(claims),
-                Expires = DateTime.Now.AddDays(7),
-                SigningCredentials = credentials
-            };
+            //var tokenDescriptor = new SecurityTokenDescriptor
+            //{
+            //    Subject = new ClaimsIdentity(claims),
+            //    Expires = DateTime.Now.AddDays(7),
+            //    SigningCredentials = credentials
+            //};
 
             var token = new JwtSecurityToken(
                 issuer: _configuration["Jwt:Issuer"],
                 audience: _configuration["Jwt:Audience"],
                 claims: claims,
-                expires: DateTime.Now.AddMinutes(15),
+                expires: DateTime.Now.AddHours(1),
                 signingCredentials: credentials
                 );
             //var tokenHandler = new JwtSecurityTokenHandler();

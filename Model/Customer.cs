@@ -10,6 +10,6 @@
         public byte[] PasswordSalt { get; set; }
 
         public ICollection<Reservation> Reservations { get; set; }
-        public ICollection<Order> Orders { get; set; }
+      
     }
 }

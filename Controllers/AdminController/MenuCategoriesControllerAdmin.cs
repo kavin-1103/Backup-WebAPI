@@ -13,7 +13,6 @@ using Restaurant_Reservation_Management_System_Api.Services.Admin.MenuCategorySe
 
 namespace Restaurant_Reservation_Management_System_Api.Controllers.AdminController
 {
-    [Authorize]
     [Route("api/admin/[controller]")]
     [ApiController]
     public class MenuCategoriesControllerAdmin : ControllerBase
@@ -30,7 +29,7 @@ namespace Restaurant_Reservation_Management_System_Api.Controllers.AdminControll
 
         // GET: api/MenuCategoriesControllerAdmin
         [HttpGet]
-        [Authorize(Roles = "Admin")]
+        
         public async Task<ActionResult<IEnumerable<GetMenuCategoryDtoAdmin>>> GetMenuCategories()
         {
             var response = await _menuCategoryServices.GetMenuCategory();
