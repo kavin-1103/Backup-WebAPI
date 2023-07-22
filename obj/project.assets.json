@@ -12365,11 +12365,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Kavin\\Desktop\\UPDATED API\\Restaurant_Reservation_Management_System_Api.csproj",
+      "projectUniqueName": "C:\\Restoran-API\\RestronAPI\\Restaurant_Reservation_Management_System_Api.csproj",
       "projectName": "Restaurant_Reservation_Management_System_Api",
-      "projectPath": "C:\\Users\\Kavin\\Desktop\\UPDATED API\\Restaurant_Reservation_Management_System_Api.csproj",
+      "projectPath": "C:\\Restoran-API\\RestronAPI\\Restaurant_Reservation_Management_System_Api.csproj",
       "packagesPath": "C:\\Users\\Kavin\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Kavin\\Desktop\\UPDATED API\\obj\\",
+      "outputPath": "C:\\Restoran-API\\RestronAPI\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\Kavin\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -12387,8 +12387,8 @@
         "net7.0": {
           "targetAlias": "net7.0",
           "projectReferences": {
-            "C:\\Users\\Kavin\\Desktop\\EmailService\\EmailService.csproj": {
-              "projectPath": "C:\\Users\\Kavin\\Desktop\\EmailService\\EmailService.csproj"
+            "C:\\Restoran-API\\EmailService\\EmailService.csproj": {
+              "projectPath": "C:\\Restoran-API\\EmailService\\EmailService.csproj"
             }
           }
         }
