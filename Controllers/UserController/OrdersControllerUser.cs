@@ -127,6 +127,7 @@ namespace Restaurant_Reservation_Management_System_Api.Controllers.UserControlle
         public async Task<ActionResult<ServiceResponse<GetOrderDtoUser>>> AddOrder(AddOrderDtoUser addOrderDtoUser)
         {
             var customerIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
+
             if(customerIdClaim==null)
             {
                 return BadRequest();
@@ -162,12 +163,63 @@ namespace Restaurant_Reservation_Management_System_Api.Controllers.UserControlle
             return NoContent();
         }
 
-        private bool OrderExists(int id)
+
+		[HttpGet]
+		[Route("GetOrderCountForLast7Days")]
+		public async Task<IActionResult> GetOrderCountForLast7Days()
+		{
+			var response = await _orderServiceUser.GetOrderCountForLast7Days();
+			if (!response.Success)
+			{
+				return BadRequest(response);
+			}
+
+			return Ok(new
+			{
+				Dates = response.Data.Dates,
+				Counts = response.Data.Counts
+			});
+
+
+		}
+
+		private bool OrderExists(int id)
         {
             return (_context.Orders?.Any(e => e.OrderId == id)).GetValueOrDefault();
         }
 
+		[HttpGet("total-order-count")]
+		public async Task<IActionResult> GetTotalOrderCount()
+		{
+			var response = await _orderServiceUser.GetTotalOrderCount();
 
-        
-    }
+			if (!response.Success)
+			{
+				return BadRequest(response);
+			}
+
+			return Ok(response);
+		}
+
+
+		[HttpGet]
+		[Route("GetOrdersOfCustomer")]
+		[Authorize(Roles = "Customer")]
+
+		public async Task<IActionResult> GetOrdersForCustomer()
+		{
+			// Get the currently logged-in user's Id from the ClaimsPrincipal
+			var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+			var response = await _orderServiceUser.GetOrdersForCustomer(userId);
+			if (!response.Success)
+			{
+				return BadRequest(response);
+
+			}
+			return Ok(response);
+
+		}
+
+	}
 }

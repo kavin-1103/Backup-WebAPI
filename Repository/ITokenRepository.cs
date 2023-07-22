@@ -3,13 +3,13 @@ using System.Security.Claims;
 
 namespace Restaurant_Reservation_Management_System_Api.Repository
 {
-    public interface ITokenRepository
-    {
-        // string CreateJwtToken(ApplicationUser user, List<string> roles);
+	public interface ITokenRepository
+	{
+		// string CreateJwtToken(ApplicationUser user, List<string> roles);
 
-        // string CreateJwtToken(List<Claim> claims);
+		// string CreateJwtToken(List<Claim> claims);
 
-        Task<string> CreateJwtToken(ApplicationUser user);
+		Task<string> CreateJwtToken(ApplicationUser user);
 
-    }
+	}
 }

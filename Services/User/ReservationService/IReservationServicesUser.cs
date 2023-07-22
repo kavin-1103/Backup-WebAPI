@@ -11,7 +11,12 @@ namespace Restaurant_Reservation_Management_System_Api.Services.User.Reservation
 
         Task<ServiceResponse<string>> DeleteReservation(int id);
 
-        Task<ServiceResponse<List<GetTableDtoUser>>> GetAvailableTables(GetReservationDetailsForTableDtoUser getReservationDetailsForTableDtoUser);
-    }
+        // Task<ServiceResponse<List<GetTableDtoUser>>> GetAvailableTables(GetReservationDetailsForTableDtoUser getReservationDetailsForTableDtoUser);
+
+        Task<ServiceResponse<List<TableAvailability>>> GetAvailableTables(GetAvailableTablesDto getAvailableTablesDto);
+
+        Task<ServiceResponse<Reservation>> ReserveTable(string customerID , CreateReservationDtoUser createReservationDtoUser);
+
+	}
 
 }

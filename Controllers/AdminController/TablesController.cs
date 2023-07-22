@@ -126,7 +126,22 @@ namespace Restaurant_Reservation_Management_System_Api.Controllers.AdminControll
 
 
 
-        private bool TableExists(int id)
+		[HttpGet]
+		[Route("total-table-count")]
+		public async Task<ActionResult<ServiceResponse<int>>> GetTotalTableCount()
+		{
+			var response = await _tableServices.GetTotalTableCount();
+
+			if (!response.Success)
+			{
+				return BadRequest(response);
+			}
+
+			return Ok(response);
+
+		}
+
+		private bool TableExists(int id)
         {
             return (_context.Tables?.Any(e => e.TableId == id)).GetValueOrDefault();
         }

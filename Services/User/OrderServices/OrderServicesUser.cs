@@ -8,8 +8,9 @@ using Microsoft.AspNetCore.Authorization;
 using System.Security.Claims;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
-
-
+using System.Globalization;
+using Restaurant_Reservation_Management_System_Api.Dto.Auth;
+using EmailService;
 
 namespace Restaurant_Reservation_Management_System_Api.Services.User.OrderServices
 {
@@ -18,15 +19,17 @@ namespace Restaurant_Reservation_Management_System_Api.Services.User.OrderServic
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly IHttpContextAccessor _httpContextAccessor;
         private readonly RestaurantDbContext _context;
-        
-        private readonly IMapper _mapper;
+		private readonly IEmailSender _emailSender;
 
-        public OrderServicesUser(RestaurantDbContext context, IMapper mapper, IHttpContextAccessor httpContextAccessor, UserManager<ApplicationUser> userManager)
+		private readonly IMapper _mapper;
+
+        public OrderServicesUser(RestaurantDbContext context, IMapper mapper, IHttpContextAccessor httpContextAccessor, UserManager<ApplicationUser> userManager, IEmailSender emailSender)
         {
             _context = context;
             _mapper = mapper;
             _httpContextAccessor = httpContextAccessor;
             _userManager = userManager;
+            _emailSender = emailSender; 
 
         }
       
@@ -57,16 +60,22 @@ namespace Restaurant_Reservation_Management_System_Api.Services.User.OrderServic
                 {
                     ApplicationUserId = customerId ,
                     OrderDate = DateTime.Now,
-                    TableId = 1,
+                    TableId = addOrderDtoUser.TableId,
 
                 };
                 _context.Orders.Add(order);
 
                 await _context.SaveChangesAsync();
 
+			    var applicationUser = await _context.Users.FirstOrDefaultAsync(u => u.Id == customerId);
+			var table = await _context.Tables.FirstOrDefaultAsync(t => t.TableId == order.TableId);
 
 
-                foreach (var orderItemDto in addOrderDtoUser.OrderItems)
+
+
+
+
+			foreach (var orderItemDto in addOrderDtoUser.OrderItems)
                 {
                     var orderItem = new OrderItem()
                     {
@@ -81,11 +90,16 @@ namespace Restaurant_Reservation_Management_System_Api.Services.User.OrderServic
                 await _context.SaveChangesAsync();
 
 
-                var getOrderDtoUser = new GetOrderDtoUser()
-                {
-                    OrderId = order.OrderId,
-                    OrderDate = order.OrderDate,
-                  //  CustomerId = order.CustomerId,
+            var getOrderDtoUser = new GetOrderDtoUser()
+            {
+                OrderId = order.OrderId,
+                OrderDate = order.OrderDate,
+                CustomerId = order.ApplicationUserId,
+                CustomerName = applicationUser?.Name,
+                TableNumber = table?.TableNumber,
+                
+                    
+                     
                     TableId = order.TableId ,
                     OrderItems = addOrderDtoUser.OrderItems ,
 
@@ -93,15 +107,24 @@ namespace Restaurant_Reservation_Management_System_Api.Services.User.OrderServic
 
                 serviceResponse.Data = getOrderDtoUser;
                 serviceResponse.Success = true;
-                serviceResponse.Message = "Ordered Successfully";
-            
-            //catch (Exception ex)
-            //{
-            //    serviceResponse.Success = false;
-            //    serviceResponse.Message = "Hi" + ex.Message;
+			    serviceResponse.Message = "Ordered Successfully";
 
-            //}
-            return serviceResponse;
+			    var employeeMessage = new Message(new string[] { applicationUser.Email }, "Registration Successfull", "\n\n" +
+						     "Thank you for registering with 'RESTORAN' We are delighted to welcome you to our platform!" + "\n\n" +
+						     "If you have any questions or need assistance, please don't hesitate to reach out to us." + "\n\n" +
+						     "Best regards,\n" +
+						     "Restoran");
+
+
+			    _emailSender.SendEmail(employeeMessage);
+
+			//catch (Exception ex)
+			//{
+			//    serviceResponse.Success = false;
+			//    serviceResponse.Message = "Hi" + ex.Message;
+
+			//}
+			return serviceResponse;
 
         }
 
@@ -215,9 +238,104 @@ namespace Restaurant_Reservation_Management_System_Api.Services.User.OrderServic
         }
 
 
+		public async Task<ServiceResponse<(List<string> Dates, List<int> Counts)>> GetOrderCountForLast7Days()
+		{
+			var serviceResponse = new ServiceResponse<(List<string>, List<int>)>();
+
+			// Calculate the date 7 days ago from today
+			var last7Days = DateTime.Now.Date.AddDays(-6); // To include today, we need to subtract 6 instead of 7.
+
+			// Get all orders from the database for the last 7 days
+			var orders = await _context.Orders
+				.Where(o => o.OrderDate >= last7Days)
+				.ToListAsync();
+
+			// Group orders by order date and count the number of orders in each group
+			var ordersPerDay = orders
+				.GroupBy(o => o.OrderDate.Date) // Group by the date part only, ignoring the time
+				.Select(g => new { OrderDate = g.Key, Count = g.Count() })
+				.ToList();
+
+			// Create a list of dates and counts for the last seven days
+			var datesForLast7Days = Enumerable.Range(0, 7)
+				.Select(offset => last7Days.AddDays(offset).ToString("MM-dd-yyyy"))
+				.ToList();
+
+			var countsForLast7Days = datesForLast7Days
+				.GroupJoin(
+					ordersPerDay,
+					date => DateTime.ParseExact(date, "MM-dd-yyyy", CultureInfo.InvariantCulture),
+					order => order.OrderDate.Date,
+					(date, orderGroup) => orderGroup.Any() ? orderGroup.First().Count : 0
+				)
+				.ToList();
+
+			// Set the dates and counts as the Data property of the ServiceResponse
+			serviceResponse.Data = (datesForLast7Days, countsForLast7Days);
+
+			return serviceResponse;
+		}
+
+
+		public async Task<ServiceResponse<IEnumerable<OrderDto>>> GetOrdersForCustomer(string customerId)
+		{
+
+			var serviceResponse = new ServiceResponse<IEnumerable<OrderDto>>();
+
+			// Retrieve the orders and their associated order items, food items, and reservation dates
+			var orders = await _context.Orders
+				.Include(o => o.OrderItems)
+				.ThenInclude(oi => oi.FoodItem)
+				.Include(o => o.Table)
+				.ThenInclude(t => t.Reservations)
+				.Where(o => o.ApplicationUserId == customerId)
+				.ToListAsync();
+
+			// Map the orders to the DTO
+			var orderDtos = new List<OrderDto>();
+
+			foreach (var order in orders)
+			{
+				var reservationDate = order.Table.Reservations.FirstOrDefault()?.ReservationDate;
+				var orderDto = new OrderDto
+				{
+					OrderId = order.OrderId,
+					OrderDate = order.OrderDate,
+					ReservationDate = reservationDate,
+					TableNumber = order.Table.TableNumber,
+					FoodItems = order.OrderItems.Select(oi => new FoodItemDto
+					{
+						FoodItem = oi.FoodItem.ItemName,
+						Quantity = oi.Quantity,
+						Price = oi.FoodItem.Price
+					}).ToList()
+				};
+
+				orderDtos.Add(orderDto);
+			}
+
+			serviceResponse.Data = orderDtos;
+			serviceResponse.Message = "All the Orders Of You!";
+			serviceResponse.Success = true;
+			return serviceResponse;
 
 
 
+		}
 
-    }
+		public async Task<ServiceResponse<int>> GetTotalOrderCount()
+		{
+			var serviceResponse = new ServiceResponse<int>();
+
+			// Get the total count of orders from the database
+			var totalCount = await _context.Orders.CountAsync();
+
+			// Set the total order count in the Data property of the ServiceResponse
+			serviceResponse.Data = totalCount;
+
+			return serviceResponse;
+		}
+
+
+	}
 }

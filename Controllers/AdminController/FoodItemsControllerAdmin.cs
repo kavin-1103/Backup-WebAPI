@@ -123,7 +123,22 @@ namespace Restaurant_Reservation_Management_System_Api.Controllers.AdminControll
 
         }
 
-        private bool FoodItemExists(int id)
+		[HttpGet]
+		[Route("GetFoodItemByCategory")]
+		public async Task<ActionResult<ServiceResponse<IEnumerable<GetFoodItemDtoAdmin>>>> GetFoodItemByCategory(int id)
+		{
+			var response = await _foodItemServicesAdmin.GetFoodItemByCategory(id);
+
+			if (response.Success == false)
+			{
+				return BadRequest(response);
+
+			}
+			return Ok(response);
+
+		}
+
+		private bool FoodItemExists(int id)
         {
             return (_context.FoodItems?.Any(e => e.FoodItemId == id)).GetValueOrDefault();
         }
