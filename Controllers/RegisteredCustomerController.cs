@@ -13,11 +13,11 @@ namespace Restaurant_Reservation_Management_System_Api.Controllers.AdminControll
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class RegisteredCustomersController : ControllerBase
+    public class RegisteredCustomerController : ControllerBase
     {
         private readonly RestaurantDbContext _context;
 
-        public RegisteredCustomersController(RestaurantDbContext context)
+        public RegisteredCustomerController(RestaurantDbContext context)
         {
             _context = context;
         }
@@ -64,7 +64,7 @@ namespace Restaurant_Reservation_Management_System_Api.Controllers.AdminControll
 
         // GET: api/RegisteredCustomers
         [HttpGet]
-        [Route("/CustomerCount")]
+        [Route("CustomerCount")]
        // [Authorize(Roles = "Admin")]
         public async Task<ActionResult<ServiceResponse<int>>> GetRegisteredCustomersCount()
         {

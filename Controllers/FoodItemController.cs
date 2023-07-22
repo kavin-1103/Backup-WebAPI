@@ -17,13 +17,13 @@ namespace Restaurant_Reservation_Management_System_Api.Controllers.AdminControll
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class FoodItemsControllerAdmin : ControllerBase
+    public class FoodItemController : ControllerBase
     {
         private readonly RestaurantDbContext _context;
 
         private readonly IFoodItemServicesAdmin _foodItemServicesAdmin;
 
-        public FoodItemsControllerAdmin(RestaurantDbContext context , IFoodItemServicesAdmin foodItemServicesAdmin)
+        public FoodItemController(RestaurantDbContext context , IFoodItemServicesAdmin foodItemServicesAdmin)
         {
             _context = context;
             _foodItemServicesAdmin = foodItemServicesAdmin;

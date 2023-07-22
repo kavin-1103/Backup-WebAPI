@@ -11,17 +11,17 @@ using Restaurant_Reservation_Management_System_Api.Dto.Admin.MenuCategory;
 using Restaurant_Reservation_Management_System_Api.Model;
 using Restaurant_Reservation_Management_System_Api.Services.Admin.MenuCategoryService;
 
-namespace Restaurant_Reservation_Management_System_Api.Controllers.AdminController
+namespace Restaurant_Reservation_Management_System_Api.Controllers
 {
-    [Route("api/admin/[controller]")]
+    [Route("api/[controller]")]
     [ApiController]
-    public class MenuCategoriesControllerAdmin : ControllerBase
+    public class MenuCategoryController : ControllerBase
     {
         private readonly RestaurantDbContext _context;
 
         private readonly IMenuCategoryServicesAdmin _menuCategoryServices;
 
-        public MenuCategoriesControllerAdmin(RestaurantDbContext context , IMenuCategoryServicesAdmin menuCategoryServices)
+        public MenuCategoryController(RestaurantDbContext context, IMenuCategoryServicesAdmin menuCategoryServices)
         {
             _context = context;
             _menuCategoryServices = menuCategoryServices;
@@ -29,26 +29,26 @@ namespace Restaurant_Reservation_Management_System_Api.Controllers.AdminControll
 
         // GET: api/MenuCategoriesControllerAdmin
         [HttpGet]
-        
+
         public async Task<ActionResult<IEnumerable<GetMenuCategoryDtoAdmin>>> GetMenuCategories()
         {
             var response = await _menuCategoryServices.GetMenuCategory();
-            if(response.Success==false)
+            if (response.Success == false)
             {
                 return BadRequest(response);
             }
-            return Ok(response);    
-         
+            return Ok(response);
+
         }
 
         // GET: api/MenuCategoriesControllerAdmin/5
         [HttpGet("{id}")]
         public async Task<ActionResult<MenuCategory>> GetMenuCategory(int id)
         {
-          if (_context.MenuCategories == null)
-          {
-              return NotFound();
-          }
+            if (_context.MenuCategories == null)
+            {
+                return NotFound();
+            }
             var menuCategory = await _context.MenuCategories.FindAsync(id);
 
             if (menuCategory == null)
@@ -83,20 +83,20 @@ namespace Restaurant_Reservation_Management_System_Api.Controllers.AdminControll
 
             var response = await _menuCategoryServices.AddMenuCategory(addMenuCategoryDtoAdmin);
 
-            if(response.Success == false)
+            if (response.Success == false)
             {
                 return BadRequest(response);
             }
 
             return Ok(response);
-          //if (_context.MenuCategories == null)
-          //{
-          //    return Problem("Entity set 'RestaurantDbContext.MenuCategories'  is null.");
-          //}
-          //  _context.MenuCategories.Add(menuCategory);
-          //  await _context.SaveChangesAsync();
+            //if (_context.MenuCategories == null)
+            //{
+            //    return Problem("Entity set 'RestaurantDbContext.MenuCategories'  is null.");
+            //}
+            //  _context.MenuCategories.Add(menuCategory);
+            //  await _context.SaveChangesAsync();
 
-          //  return CreatedAtAction("GetMenuCategory", new { id = menuCategory.MenuCategoryId }, menuCategory);
+            //  return CreatedAtAction("GetMenuCategory", new { id = menuCategory.MenuCategoryId }, menuCategory);
         }
 
         // DELETE: api/MenuCategoriesControllerAdmin/5

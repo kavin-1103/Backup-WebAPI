@@ -18,7 +18,7 @@ namespace Restaurant_Reservation_Management_System_Api.Controllers.UserControlle
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class OrdersControllerUser : ControllerBase
+    public class FoodOrderController : ControllerBase
     {
         private readonly RestaurantDbContext _context;
       //  private readonly UserManager<ApplicationUser> _userManager;
@@ -26,7 +26,7 @@ namespace Restaurant_Reservation_Management_System_Api.Controllers.UserControlle
 
         private readonly IOrderServicesUser _orderServiceUser;
 
-        public OrdersControllerUser(RestaurantDbContext context , IOrderServicesUser orderServicesUser )
+        public FoodOrderController(RestaurantDbContext context , IOrderServicesUser orderServicesUser )
         {
             _context = context;
             _orderServiceUser = orderServicesUser;

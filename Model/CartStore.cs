@@ -3,7 +3,7 @@
     public class CartStore
     {
         public int CartStoreId { get; set; }
-        public AddToCart AddToCart { get; set; }    
+       // public AddToCart AddToCart { get; set; }    
 
         public int AddToCartId { get; set; }
 

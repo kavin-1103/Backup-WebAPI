@@ -12,15 +12,15 @@ using Restaurant_Reservation_Management_System_Api.Services.Admin.TableService;
 
 namespace Restaurant_Reservation_Management_System_Api.Controllers.AdminController
 {
-    [Route("api/admin/[controller]")]
+    [Route("api/[controller]")]
     [ApiController]
-    public class TablesController : ControllerBase
+    public class DiningTableController : ControllerBase
     {
         private readonly RestaurantDbContext _context;
 
         private readonly ITableServicesAdmin _tableServices;
 
-        public TablesController(RestaurantDbContext context, ITableServicesAdmin tableServices)
+        public DiningTableController(RestaurantDbContext context, ITableServicesAdmin tableServices)
         {
             _context = context;
             _tableServices = tableServices;

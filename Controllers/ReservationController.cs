@@ -16,13 +16,13 @@ namespace Restaurant_Reservation_Management_System_Api.Controllers.UserControlle
 {
     [Route("api/customer/[controller]")]
     [ApiController]
-    public class ReservationsController : ControllerBase
+    public class ReservationController : ControllerBase
     {
         private readonly RestaurantDbContext _context;
 
         private readonly IReservationServicesUser _reservationServices;
 
-        public ReservationsController(RestaurantDbContext context , IReservationServicesUser reservationServices)
+        public ReservationController(RestaurantDbContext context , IReservationServicesUser reservationServices)
         {
             _context = context;
             _reservationServices = reservationServices;
